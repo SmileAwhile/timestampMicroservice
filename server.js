@@ -2,7 +2,8 @@ var express = require('express')
 var app = express();
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  var obj = req.query
+  res.send(obj)
 });
 
 var port = process.env.PORT || 3000;
