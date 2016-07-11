@@ -49,6 +49,8 @@ function cleanDate(d) {
     return new Date(+d.replace(/\/Date\((\d+)\)\//, '$1'));
 }
 
+app.use(express.static('public'));
+
 app.get('/:time', function (req, res) {
   var arg = req.params.time;
   console.log(Date.parse(arg))
