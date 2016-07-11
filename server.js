@@ -58,16 +58,16 @@ app.get('/:time', function (req, res) {
     }
     else {
       unix_timestamp = arg.replace('/Date(', '').replace(')/', '')
-      var d = new Date(parseInt(arg));
+      var d = new Date(parseInt(arg) * 1000);
       console.log(arg);
       console.log(parseInt(arg));
 
       console.log(d)
     }
-    var y = d.getFullYear();
-    var dy = d.getDate();
-    var m = monthName(d.getMonth());
-    var u = d.getTime();
+    var y = d.getUTCFullYear();
+    var dy = d.getUTCDate();
+    var m = monthName(d.getUTCMonth());
+    var u = d.getTime() / 1000;
     res.send({ "unixtime": u, "natural": m + " " + dy + ", " + y })
   }
   else {
