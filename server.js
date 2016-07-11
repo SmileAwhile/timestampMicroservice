@@ -49,33 +49,32 @@ function cleanDate(d) {
     return new Date(+d.replace(/\/Date\((\d+)\)\//, '$1'));
 }
 
+
+
 app.use(express.static('public'));
 
 app.get('/:time', function (req, res) {
   var arg = req.params.time;
 
   if (!isNaN(Date.parse(arg)) || (!isNaN(arg) )) {
-    if (!isNaN(Date.parse(arg))) {
+    if (Number.isInteger(parseInt(arg))) {
+      var u = parseInt(arg, 10) * 1000;
+      var d = new Date(u);
+    }
+    else if (!isNaN(Date.parse(arg))) {
       var d = new Date(arg);
+      var u = d.getTime() / 1000
     }
-    else {
-      unix_timestamp = arg.replace('/Date(', '').replace(')/', '')
-      var d = new Date(parseInt(arg) * 1000);
 
-    }
     var y = d.getUTCFullYear();
     var dy = d.getUTCDate();
     var m = monthName(d.getUTCMonth());
-    var u = d.getTime() / 1000;
     res.send({ "unixtime": u, "natural": m + " " + dy + ", " + y });
   }
   else {
     res.send({ "unixtime": null, "natural": null });
   }
-
 });
 
 var port = process.env.PORT || 3000;
-
 app.listen(port);
-console.log("listening on port " + port);
