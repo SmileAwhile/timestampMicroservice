@@ -53,7 +53,7 @@ app.use(express.static('public'));
 
 app.get('/:time', function (req, res) {
   var arg = req.params.time;
-  console.log(Date.parse(arg))
+
   if (!isNaN(Date.parse(arg)) || (!isNaN(arg) )) {
     if (!isNaN(Date.parse(arg))) {
       var d = new Date(arg);
@@ -61,19 +61,16 @@ app.get('/:time', function (req, res) {
     else {
       unix_timestamp = arg.replace('/Date(', '').replace(')/', '')
       var d = new Date(parseInt(arg) * 1000);
-      console.log(arg);
-      console.log(parseInt(arg));
 
-      console.log(d)
     }
     var y = d.getUTCFullYear();
     var dy = d.getUTCDate();
     var m = monthName(d.getUTCMonth());
     var u = d.getTime() / 1000;
-    res.send({ "unixtime": u, "natural": m + " " + dy + ", " + y })
+    res.send({ "unixtime": u, "natural": m + " " + dy + ", " + y });
   }
   else {
-    res.send(null);
+    res.send({ "unixtime": null, "natural": null });
   }
 
 });
